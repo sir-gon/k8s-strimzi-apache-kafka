@@ -21,6 +21,12 @@ Install Strimzi operator
 kubectl create -f strimzi-operator.yml --namespace=kafka
 ```
 
+Create a cluster
+
+```bash
+kubectl apply -f strimzi-cluster-tatooine.yml --namespace=dev
+```
+
 ## DESTROY
 
 ```bash
