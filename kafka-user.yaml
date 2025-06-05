@@ -1,0 +1,32 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: tutorial-user
+  namespace: kafka-tutorial # Replace with your actual namespace
+  labels:
+    strimzi.io/cluster: prod-cluster
+spec:
+  authentication:
+    type: scram-sha-512
+    # The password will be automatically generated and stored in a Kubernetes Secret
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: "tutorial-topic"
+          patternType: literal
+        operation: Write
+        host: "*"
+      - resource:
+          type: topic
+          name: "tutorial-topic"
+          patternType: literal
+        operation: Read
+        host: "*"
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: Read
+        host: "*"
