@@ -1,0 +1,13 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: tutorial-topic
+  namespace: kafka-tutorial
+  labels:
+    strimzi.io/cluster: prod-cluster
+spec:
+  partitions: 1
+  replicas: 2
+  config:
+    retention.ms: 7200000
+    segment.bytes: 1073741824
