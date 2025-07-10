@@ -1,5 +1,23 @@
 # k8s-strimzi-apache-kafka
 
+## Pre-requirements
+
+Give enough resources to minikube
+
+```bash
+minikube config set memory 8192
+minikube config set cpus 4
+```
+
+Start Minikube
+
+```bash
+minikube start --kubernetes-version=v1.32.1
+minikube dashboard &
+```
+
+## Strimzi
+
 Install Strimzi operator:
 
 ```bash
@@ -20,6 +38,8 @@ Install Strimzi operator
 ```bash
 kubectl create -f strimzi-operator.yml --namespace=kafka
 ```
+
+## Kafka Clusters
 
 Create clusters
 
