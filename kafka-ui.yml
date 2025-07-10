@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-ui
+  labels:
+    app: kafka-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-ui
+  template:
+    metadata:
+      labels:
+        app: kafka-ui
+    spec:
+      containers:
+        - name: kafka-ui
+          image: provectuslabs/kafka-ui:latest # Replace with the desired version
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KAFKA_CLUSTERS_0_NAME
+              value: "(DEV) tatooine" # Name of your Kafka cluster
+            - name: KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS
+              value: "tatooine-kafka-bootstrap.dev.svc:9092" # Kafka bootstrap server
+            - name: KAFKA_CLUSTERS_1_NAME
+              value: "(UAT) naboo" # Name of your Kafka cluster
+            - name: KAFKA_CLUSTERS_1_BOOTSTRAPSERVERS
+              value: "naboo-kafka-bootstrap.uat.svc:9092" # Kafka bootstrap server
+            - name: KAFKA_CLUSTERS_2_NAME
+              value: "(PROD) coruscant" # Name of your Kafka cluster
+            - name: KAFKA_CLUSTERS_2_BOOTSTRAPSERVERS
+              value: "coruscant-kafka-bootstrap.prod.svc:9092" # Kafka bootstrap server
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-ui
+  labels:
+    app: kafka-ui
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8080 # The port the service will expose
+      targetPort: 8080 # The port on the container
+      # nodePort: 30007
+  selector:
+    app: kafka-ui

@@ -49,6 +49,18 @@ kubectl apply -f kafka-cluster-naboo.yml --namespace=uat
 kubectl apply -f kafka-cluster-coruscant.yml --namespace=prod
 ```
 
+Create Kafka UI
+
+```bash
+kubectl apply -f kafka-ui.yml --namespace=kafka
+```
+
+Expose Kafka UI
+
+```bash
+minikube service kafka-ui --namespace=kafka kafka --url &
+```
+
 ## DESTROY
 
 ```bash
