@@ -5,7 +5,7 @@ metadata:
   labels:
     strimzi.io/cluster: naboo
 spec:
-  replicas: 1
+  replicas: 3
   roles:
     - controller
     - broker
@@ -39,14 +39,23 @@ spec:
         type: internal
         tls: true
       - name: external
-        port: 49094
-        type: loadbalancer
+        port: 9095
+        type: nodeport
         tls: false
         configuration:
           brokers:
             - broker: 0
-              advertisedHost: localhost
-              advertisedPort: 49094
+              advertisedHost: 127.0.0.1
+              advertisedPort: 31080
+              nodePort: 31080
+            - broker: 1
+              advertisedHost: 127.0.0.1
+              advertisedPort: 31081
+              nodePort: 31081
+            - broker: 2
+              advertisedHost: 127.0.0.1
+              advertisedPort: 31082
+              nodePort: 31082
     config:
       offsets.topic.replication.factor: 1
       transaction.state.log.replication.factor: 1
