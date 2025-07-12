@@ -5,7 +5,7 @@ metadata:
   labels:
     strimzi.io/cluster: tatooine
 spec:
-  replicas: 1
+  replicas: 3
   roles:
     - controller
     - broker
@@ -39,14 +39,23 @@ spec:
         type: internal
         tls: true
       - name: external
-        port: 39094
-        type: loadbalancer
+        port: 9094
+        type: nodeport
         tls: false
         configuration:
           brokers:
             - broker: 0
-              advertisedHost: localhost
-              advertisedPort: 39094
+              advertisedHost: 127.0.0.1
+              advertisedPort: 31090
+              nodePort: 31090
+            - broker: 1
+              advertisedHost: 127.0.0.1
+              advertisedPort: 31091
+              nodePort: 31091
+            - broker: 2
+              advertisedHost: 127.0.0.1
+              advertisedPort: 31092
+              nodePort: 31092
     config:
       offsets.topic.replication.factor: 1
       transaction.state.log.replication.factor: 1

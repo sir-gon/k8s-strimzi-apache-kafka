@@ -5,7 +5,7 @@ metadata:
   labels:
     strimzi.io/cluster: coruscant
 spec:
-  replicas: 1
+  replicas: 3
   roles:
     - controller
     - broker
@@ -39,14 +39,23 @@ spec:
         type: internal
         tls: true
       - name: external
-        port: 59094
-        type: loadbalancer
+        port: 9096
+        type: nodeport
         tls: false
         configuration:
           brokers:
             - broker: 0
-              advertisedHost: localhost
-              advertisedPort: 59094
+              advertisedHost: 127.0.0.1
+              advertisedPort: 31070
+              nodePort: 31070
+            - broker: 1
+              advertisedHost: 127.0.0.1
+              advertisedPort: 31071
+              nodePort: 31071
+            - broker: 2
+              advertisedHost: 127.0.0.1
+              advertisedPort: 31072
+              nodePort: 31072
     config:
       offsets.topic.replication.factor: 1
       transaction.state.log.replication.factor: 1
