@@ -61,6 +61,22 @@ Expose Kafka UI
 minikube service kafka-ui --namespace=kafka kafka --url &
 ```
 
+Expose (minikube) Kafka clusters
+
+Using cluster exposition as LoadBalancer Service
+
+```bash
+sudo minikube tunnel
+```
+
+Test services listening from outside:
+
+```bash
+nc -vz localhost 39094
+nc -vz localhost 49094
+nc -vz localhost 59094
+```
+
 ## DESTROY
 
 ```bash
